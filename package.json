@@ -4,13 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server" : "npm run watch --prefix server",
-    "client" : "npm start --prefix client",
-    "deploy" : "npm run build --prefix client && npm start --prefix server",
-    "watch" : "npm run server & npm run client",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "server": "npm run watch --prefix server",
+    "client": "npm start --prefix client",
+    "deploy": "npm run build --prefix client && npm start --prefix server",
+    "deploy-cluster": "npm run build --prefix client && npm run cluster --prefix server",
+    "watch": "npm run server & npm run client",
+    "test": "npm test --prefix server && npm test --prefix client"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^6.2.5"
+  }
 }
