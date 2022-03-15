@@ -41,7 +41,6 @@ async function getAllLaunches() {
   );
 }
 
-//28
 
 async function getLatestFlightNumber() {
   const latestLaunch = await launches.findOne().sort("-flightNumber");
