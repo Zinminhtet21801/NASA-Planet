@@ -1,3 +1,4 @@
+
 const app = require("../../app");
 const request = require("supertest");
 const { mongoConnect, mongoDisconnect } = require("../../services/mongo");
@@ -11,7 +12,7 @@ describe("Launches API", () => {
   });
   describe("Test GET /launches", () => {
     test("It should response with 200 success", async () => {
-      await request(app).get("/planets").expect(200);
+      await request(app).get("/v1/planets").expect(200);
     });
   });
 
@@ -38,13 +39,13 @@ describe("Launches API", () => {
 
     test("It should response with 200 success", async () => {
       await request(app)
-        .get("/launches")
+        .get("/v1/launches")
         .expect("Content-Type", /json/)
         .expect(200);
     });
     test("Post launches should response with 201 created", async () => {
       const response = await request(app)
-        .post("/launches")
+        .post("/v1/launches")
         .send(completeLaunchData)
         .expect("Content-Type", /json/)
         .expect(201);
@@ -57,7 +58,7 @@ describe("Launches API", () => {
 
     test("Post launches should response with 400 bad request", async () => {
       await request(app)
-        .post("/launches")
+        .post("/v1/launches")
         .send({
           mission: "ZEKE111",
           rocket: "ZEKE EIS IS1",
@@ -69,7 +70,7 @@ describe("Launches API", () => {
 
     test("It should catch missing required properties", async () => {
       const response = await request(app)
-        .post("/launches")
+        .post("/v1/launches")
         .send(launchDataWithoutDate)
         .expect("Content-Type", /json/)
         .expect(400);
@@ -80,7 +81,7 @@ describe("Launches API", () => {
     });
     test("It should catch invalid dates", async () => {
       const response = await request(app)
-        .post("/launches")
+        .post("/v1/launches")
         .send(launchDataWithInvalidDate)
         .expect("Content-Type", /json/)
         .expect(400);
