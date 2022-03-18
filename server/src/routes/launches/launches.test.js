@@ -1,11 +1,12 @@
-
 const app = require("../../app");
 const request = require("supertest");
 const { mongoConnect, mongoDisconnect } = require("../../services/mongo");
+const { loadPlanetsData } = require("../../models/planets.model");
 
 describe("Launches API", () => {
   beforeAll(async () => {
     await mongoConnect();
+    await loadPlanetsData();
   });
   afterAll(async () => {
     await mongoDisconnect();
@@ -18,31 +19,25 @@ describe("Launches API", () => {
 
   describe("Test POST /launches", () => {
     const completeLaunchData = {
-      mission: "ZEKE111",
-      rocket: "ZEKE EIS IS1",
-      destination: "Kepler-62 f",
-      launchDate: "January 17, 2030",
+      mission: "USS Enterprise",
+      rocket: "NCC 1701-D",
+      target: "Kepler-62 f",
+      launchDate: "January 4, 2028",
     };
 
     const launchDataWithoutDate = {
-      mission: "ZEKE111",
-      rocket: "ZEKE EIS IS1",
-      destination: "Kepler-62 f",
+      mission: "USS Enterprise",
+      rocket: "NCC 1701-D",
+      target: "Kepler-62 f",
     };
 
     const launchDataWithInvalidDate = {
-      mission: "ZEKE111",
-      rocket: "ZEKE EIS IS1",
-      destination: "Kepler-62 f",
-      launchDate: "zooties",
+      mission: "USS Enterprise",
+      rocket: "NCC 1701-D",
+      target: "Kepler-62 f",
+      launchDate: "zoot",
     };
-
-    test("It should response with 200 success", async () => {
-      await request(app)
-        .get("/v1/launches")
-        .expect("Content-Type", /json/)
-        .expect(200);
-    });
+    
     test("Post launches should response with 201 created", async () => {
       const response = await request(app)
         .post("/v1/launches")
@@ -53,6 +48,7 @@ describe("Launches API", () => {
       const requestDate = new Date(completeLaunchData.launchDate).valueOf();
       const responseDate = new Date(response.body.launchDate).valueOf();
       expect(responseDate).toBe(requestDate);
+
       expect(response.body).toMatchObject(launchDataWithoutDate);
     });
 
