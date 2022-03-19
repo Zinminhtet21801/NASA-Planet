@@ -1,10 +1,11 @@
-require("dotenv").config();
 const mongoose = require("mongoose");
-const { MongoMemoryServer } = require("mongodb-memory-server");
-const mongod = new MongoMemoryServer();
+
+require("dotenv").config();
+
+const MONGO_URL = process.env.MONGO_URL;
 
 mongoose.connection.once("open", () => {
-  console.log("connected to mongoDB");
+  console.log("MongoDB connection ready!");
 });
 
 mongoose.connection.on("error", (err) => {
@@ -12,21 +13,14 @@ mongoose.connection.on("error", (err) => {
 });
 
 async function mongoConnect() {
-  await mongoose.connect(process.env.MONGO_URL);
-}
-
-async function clearConnection() {
-  const collections = mongoose.connection.collections;
-  for (const key in collections) {
-    const collection = collections[key];
-    await collection.deleteMany();
-  }
+  await mongoose.connect(MONGO_URL);
 }
 
 async function mongoDisconnect() {
   await mongoose.disconnect();
-  await mongoose.connection.close();
-  await mongod.stop();
 }
 
-module.exports = { mongoConnect, mongoDisconnect,clearConnection };
+module.exports = {
+  mongoConnect,
+  mongoDisconnect,
+};
