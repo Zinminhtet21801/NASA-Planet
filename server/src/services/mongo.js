@@ -1,6 +1,5 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
-const MONGO_DB_URL = process.env.MONGO_URL;
 
 mongoose.connection.once("open", () => {
   console.log("connected to mongoDB");
@@ -11,11 +10,19 @@ mongoose.connection.on("error", (err) => {
 });
 
 async function mongoConnect() {
-  await mongoose.connect(MONGO_DB_URL);
+  try {
+    await mongoose.connect(process.env.MONGO_URL);
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 async function mongoDisconnect() {
-  await mongoose.disconnect()
+  try {
+    await mongoose.disconnect();
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 module.exports = { mongoConnect, mongoDisconnect };
