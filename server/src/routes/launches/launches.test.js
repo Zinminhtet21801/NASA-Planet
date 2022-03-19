@@ -8,9 +8,11 @@ describe("Launches API", () => {
     await mongoConnect();
     await loadPlanetsData();
   });
+
   afterAll(async () => {
     await mongoDisconnect();
   });
+
   describe("Test GET /launches", () => {
     test("It should response with 200 success", async () => {
       await request(app).get("/v1/planets").expect(200);
@@ -37,7 +39,7 @@ describe("Launches API", () => {
       target: "Kepler-62 f",
       launchDate: "zoot",
     };
-    
+
     test("Post launches should response with 201 created", async () => {
       const response = await request(app)
         .post("/v1/launches")

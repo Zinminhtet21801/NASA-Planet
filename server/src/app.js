@@ -13,7 +13,6 @@ app.use(
   })
 );
 
-// 12
 
 app.use(morgan("combined"));
 
