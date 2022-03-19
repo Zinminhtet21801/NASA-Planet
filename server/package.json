@@ -4,7 +4,7 @@
   "description": "NASA MISSION CONTROL API",
   "main": "src/server.js",
   "scripts": {
-    "test": "npm install && jest",
+    "test": "npm install && jest --runInBand --detectOpenHandles --forceExit",
     "test-watch": "jest --watch",
     "start": "node src/server.js",
     "watch": "nodemon src/server.js",

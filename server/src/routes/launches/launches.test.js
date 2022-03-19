@@ -15,6 +15,7 @@ describe("Launches API", () => {
 
   afterAll(async () => {
     await mongoDisconnect();
+    process.exit(1)
   });
 
   describe("Test GET /launches", () => {
