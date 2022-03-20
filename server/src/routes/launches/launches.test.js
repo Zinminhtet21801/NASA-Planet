@@ -16,12 +16,6 @@ describe("Launches API", () => {
       resolve();
     });
   });
-  
-  jest.setTimeout(10000);
-  // afterAll(async () => {
-  //   await mongoDisconnect();
-  // });
-
   afterAll(() => {
     return new Promise((resolve) => {
       mongoDisconnect();
@@ -29,13 +23,18 @@ describe("Launches API", () => {
     });
   });
 
+  // afterAll(async () => {
+  //   await mongoDisconnect();
+  // });
+
   describe("Test GET /launches", () => {
+
     test("It should respond with 200 success", async () => {
       const response = await request(app)
         .get("/v1/launches")
         .expect("Content-Type", /json/)
         .expect(200);
-    });
+      },70000);
   });
 
   describe("Test POST /launch", () => {
