@@ -12,6 +12,7 @@ mongoose.connection.once("open", () => {
 
 // mongoose.connection.on("close", () => {
 //   console.log("MongoDB closed!");
+//   // process.kill(process.pid, "SIGINT");
 // });
 
 // mongoose.connection.on("error", (err) => {
@@ -24,7 +25,6 @@ async function mongoConnect() {
 
 async function mongoDisconnect() {
   await mongoose.disconnect();
-  process.kill(process.pid, "SIGINT");
 }
 
 module.exports = {
