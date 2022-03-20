@@ -6,18 +6,17 @@ mongoose.connection.once("open", () => {
   console.log("MongoDB connection ready!");
 });
 
-// mongoose.connection.on("disconnected", () => {
-//   console.log("MongoDB disconnected!");
-// });
+mongoose.connection.on("disconnected", () => {
+  console.log("MongoDB disconnected!");
+});
 
-// mongoose.connection.on("close", () => {
-//   console.log("MongoDB closed!");
-//   // process.kill(process.pid, "SIGINT");
-// });
+mongoose.connection.on("close", () => {
+  console.log("MongoDB closed!");
+});
 
-// mongoose.connection.on("error", (err) => {
-//   console.error(err);
-// });
+mongoose.connection.on("error", (err) => {
+  console.error(err);
+});
 
 async function mongoConnect() {
   await mongoose.connect(MONGO_URL);
@@ -25,6 +24,7 @@ async function mongoConnect() {
 
 async function mongoDisconnect() {
   await mongoose.disconnect();
+  process.kill(process.pid, "SIGINT");
 }
 
 module.exports = {

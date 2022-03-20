@@ -4,37 +4,38 @@ const { mongoConnect, mongoDisconnect } = require("../../services/mongo");
 const { loadPlanetsData } = require("../../models/planets.model");
 
 describe("Launches API", () => {
+
   // beforeAll(async () => {
   //   await mongoConnect();
   //   await loadPlanetsData();
   // });
 
-  beforeAll(() => {
-    return new Promise((resolve) => {
-      mongoConnect();
-      loadPlanetsData();
-      resolve();
-    });
-  });
-  afterAll(() => {
-    return new Promise((resolve) => {
-      mongoDisconnect();
-      resolve();
-    });
-  });
-
-  // afterAll(async () => {
+  //   afterAll(async () => {
   //   await mongoDisconnect();
   // });
 
-  describe("Test GET /launches", () => {
+  beforeAll(() => {
+    new Promise(async (resolve) => {
+      await mongoConnect();
+      await loadPlanetsData();
+      resolve();
+    });
+  });
 
+  afterAll(() => {
+    new Promise(async (resolve) => {
+      await mongoDisconnect();
+      resolve();
+    });
+  });
+
+  describe("Test GET /launches", () => {
     test("It should respond with 200 success", async () => {
       const response = await request(app)
         .get("/v1/launches")
         .expect("Content-Type", /json/)
         .expect(200);
-      },70000);
+    });
   });
 
   describe("Test POST /launch", () => {

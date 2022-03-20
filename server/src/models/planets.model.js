@@ -18,7 +18,7 @@ const isHabitable = (planet) => {
 };
 
 async function loadPlanetsData() {
-  return new Promise((resolve, reject) => {
+  await new Promise((resolve, reject) => {
     fs.createReadStream(path.join(__dirname, "../../data/kepler_data.csv"))
       .pipe(parser)
       .on("data", async (data) => {
@@ -35,34 +35,33 @@ async function loadPlanetsData() {
       })
       .on("end", async () => {
         const countPlanetsFound = await getAllPlanets();
-        console.log(
-          countPlanetsFound.length,
-          " habitable planets found. 🚀🚀🚀 "
-        );
+        // console.log(
+        //   countPlanetsFound.length,
+        //   " habitable planets found. 🚀🚀🚀 "
+        // );
       });
     resolve();
   });
 }
 
 async function getAllPlanets() {
-  return await planets.find({},{
-    "_id" : 0,
-    "__v" : 0
-  });
+  return await planets.find(
+    {},
+    {
+      _id: 0,
+      __v: 0,
+    }
+  );
 }
 
 async function savePlanet(planet) {
-  try {
-    await planets.updateOne(
-      {
-        keplerName: planet.kepler_name,
-      },
-      { keplerName: planet.kepler_name },
-      { upsert: true }
-    );
-  } catch (err) {
-    console.error(err);
-  }
+  return await planets.updateOne(
+    {
+      keplerName: planet.kepler_name,
+    },
+    { keplerName: planet.kepler_name },
+    { upsert: true }
+  );
 }
 
 module.exports = {

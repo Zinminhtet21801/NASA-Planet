@@ -3,8 +3,6 @@ const path = require("path");
 const app = express();
 const cors = require("cors");
 const morgan = require("morgan");
-const planetsRouter = require("./routes/planets/planets.router");
-const launchesRouter = require("./routes/launches/launches.router");
 const v1Api = require("./apiVersion/v1");
 
 app.use(
