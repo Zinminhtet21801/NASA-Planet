@@ -9,6 +9,7 @@ describe("Launches API", () => {
   //   await loadPlanetsData();
   // });
 
+  jest.setTimeout(10000);
   beforeAll(() => {
     return new Promise((resolve) => {
       mongoConnect();
@@ -63,6 +64,7 @@ describe("Launches API", () => {
         .post("/v1/launches")
         .send(completeLaunchData)
         .expect("Content-Type", /json/)
+        // .expect("No matching planet found")
         .expect(201);
 
       const requestDate = new Date(completeLaunchData.launchDate).valueOf();
