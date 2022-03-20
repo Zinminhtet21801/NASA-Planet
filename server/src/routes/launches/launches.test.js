@@ -9,7 +9,6 @@ describe("Launches API", () => {
   //   await loadPlanetsData();
   // });
 
-  jest.setTimeout(10000);
   beforeAll(() => {
     return new Promise((resolve) => {
       mongoConnect();
@@ -17,7 +16,8 @@ describe("Launches API", () => {
       resolve();
     });
   });
-
+  
+  jest.setTimeout(10000);
   // afterAll(async () => {
   //   await mongoDisconnect();
   // });
